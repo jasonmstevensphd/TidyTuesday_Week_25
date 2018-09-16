@@ -43,7 +43,7 @@ Text.
 
 ```{r CatvDog Setup, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
 
-Week_24_Data <- read_csv("TidyTuesday_2018_Week_24/cats_vs_dogs.csv")[-1]
+Week_24_Data <- read_csv("https://raw.githubusercontent.com/jasonmstevensphd/TidyTuesday_Week_25/master/cats_vs_dogs.csv")[-1]
 
 
 head(Week_24_Data)
@@ -62,23 +62,6 @@ ggplot(Week_24_Data, aes(map_id = state)) +
 
 As this is a state based analysis I thought it would be a good opportunity to learn some map plotting features.
 
-
-```{r CatvDog Map 01, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
-
-library(maps)
-
-states_map <- map_data("state")
-
-Week_24_Data$state <- tolower(Week_24_Data$state)
-
-ggplot(Week_24_Data, aes(map_id = state)) +
-  geom_map(aes(fill = cat_population), map = states_map) +
-  expand_limits(x = states_map$long, y = states_map$lat) +
-  coord_map()+
-  ggtitle("This is my first map")
-
-```
-
 ```{r CatvDog Map 02, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
 
 library(fiftystater)
@@ -87,7 +70,7 @@ ggplot(Week_24_Data, aes(map_id = state)) +
      geom_map(aes(fill = dog_population), map = fifty_states) + 
      expand_limits(x = fifty_states$long, y = fifty_states$lat) +
      coord_map() +
-  ggtitle("This is my second map!")+
+  ggtitle("This is my second map!")
 
 ```
 
