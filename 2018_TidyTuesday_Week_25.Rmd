@@ -1,0 +1,94 @@
+---
+title: "Tidy Tuesday Data Exploration"
+author: "@jasonmstevens"
+date: "August 2018 to present"
+output:
+  html_document:
+    theme: journal
+    toc: yes
+    toc_depth: 3
+---
+
+#Tidy Tuesday: A weekly data science challenge
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(RColorBrewer)
+
+Analyst <- "@jasonmstevens"
+Time_of_Analysis <- now(tz = "America/New_York")
+
+plot <- theme(plot.background = element_rect(fill = "white"))+
+        theme(panel.background = element_rect(fill = "white",
+                                              colour="grey50"))+
+        theme(plot.title = element_text(face = "bold",
+                                        size = 18,
+                                        color = "navy"))+
+        theme(axis.title = element_text(face = "bold", size = 16))+
+        theme(aspect.ratio = 3.5/5)
+
+```
+
+
+##Week 24: Cat's vs Dogs
+###Bringing in the Data
+Text.
+
+<br>
+
+<https://github.com/rfordatascience/tidytuesday/tree/master/data/2018-09-11>
+
+```{r CatvDog Setup, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
+
+Week_24_Data <- read_csv("TidyTuesday_2018_Week_24/cats_vs_dogs.csv")[-1]
+
+
+head(Week_24_Data)
+
+states_map <- map_data("state")
+
+Week_24_Data$state <- tolower(Week_24_Data$state)
+
+ggplot(Week_24_Data, aes(map_id = state)) +
+  geom_map(aes(fill = cat_population), map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  coord_map()+
+  ggtitle("This is my first map")
+
+```
+
+As this is a state based analysis I thought it would be a good opportunity to learn some map plotting features.
+
+
+```{r CatvDog Map 01, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
+
+library(maps)
+
+states_map <- map_data("state")
+
+Week_24_Data$state <- tolower(Week_24_Data$state)
+
+ggplot(Week_24_Data, aes(map_id = state)) +
+  geom_map(aes(fill = cat_population), map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  coord_map()+
+  ggtitle("This is my first map")
+
+```
+
+```{r CatvDog Map 02, echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE}
+
+library(fiftystater)
+
+ggplot(Week_24_Data, aes(map_id = state)) + 
+     geom_map(aes(fill = dog_population), map = fifty_states) + 
+     expand_limits(x = fifty_states$long, y = fifty_states$lat) +
+     coord_map() +
+  ggtitle("This is my second map!")+
+
+```
+
+####Week 24: What was learned
